@@ -11,12 +11,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,20 +36,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val info = findViewById<ImageView>(R.id.infoImage)
+        info.setOnClickListener{
+            val infoPopup = AlertDialog.Builder(this)
+            infoPopup.setTitle("INFO")
+            infoPopup.setMessage("This app is tracking your location\n\nBy click on START TRACKING LOCATION" +
+                    " you will see the current location\n\nIf the accuracy is better then 50 meters" +
+                    " you will be able to set the current location as home\n\nIf there is already " +
+                    "home location defined you will be able to clear it")
+            infoPopup.show()
+        }
+
         val sp : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val homeLat = sp.getString("homeLat", null)
         val homeLon = sp.getString("homeLon", null)
 
-        if(homeLat != null && homeLon != null)
-        {
-            if(homeLat != "null")
-            {
-                findViewById<TextView>(R.id.homeLocationText).text = "Home location defined as: "
-                findViewById<TextView>(R.id.homeLat).text = homeLat
-                findViewById<TextView>(R.id.homeLon).text = homeLon
-                findViewById<Button>(R.id.clearHome).visibility = View.VISIBLE
-            }
-        }
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -79,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.accuracy).text = ""
                 startTrackButton.text = "Start tracking location"
                 startTrackState = 0
+                findViewById<Button>(R.id.setHome).visibility = View.INVISIBLE
             }
             //button.visibility = View.INVISIBLE; to make a button invisible
         }
@@ -97,10 +101,29 @@ class MainActivity : AppCompatActivity() {
             clearHomeButton.visibility = View.INVISIBLE
         }
 
-        val setHomeButton = findViewById<Button>(R.id.clearHome)
+        val setHomeButton = findViewById<Button>(R.id.setHome)
         setHomeButton.visibility = View.INVISIBLE
         setHomeButton.setOnClickListener{
             Log.d(TAG, "clicked on set")
+            val editor = sp.edit()
+            editor.putString("homeLat", findViewById<TextView>(R.id.curLat).text.toString())
+            editor.putString("homeLon", findViewById<TextView>(R.id.curLon).text.toString())
+            editor.apply()
+            findViewById<TextView>(R.id.homeLocationText).text = "Home defined as: "
+            findViewById<TextView>(R.id.homeLat).text = sp.getString("homeLat", null)
+            findViewById<TextView>(R.id.homeLon).text = sp.getString("homeLon", null)
+            clearHomeButton.visibility = View.VISIBLE
+        }
+
+        if(homeLat != null && homeLon != null)
+        {
+            if(homeLat != "null")
+            {
+                findViewById<TextView>(R.id.homeLocationText).text = "Home defined as: "
+                findViewById<TextView>(R.id.homeLat).text = homeLat
+                findViewById<TextView>(R.id.homeLon).text = homeLon
+                clearHomeButton.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -144,12 +167,20 @@ class MainActivity : AppCompatActivity() {
             val location: Location? = task.result
             if(location != null)
             {
-                // add units
                 findViewById<TextView>(R.id.curLat).text = location.latitude.toString() + 0x00B0.toChar()
                 findViewById<TextView>(R.id.curLon).text = location.longitude.toString() + 0x00B0.toChar()
                 findViewById<TextView>(R.id.curLocationText).text = "Current location:"
                 findViewById<TextView>(R.id.accuracy).text = "Accuracy: " +
                         location.accuracy.toString() + " meters"
+
+                if(location.accuracy < 50)
+                {
+                    setHome.visibility = View.VISIBLE
+                }
+            }
+            else
+            {
+                Log.d(TAG, "Location not valid")
             }
         }
     }
