@@ -21,21 +21,9 @@
         android:id="@+id/curLocationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/curLocationText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/curLon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"/>
-
-    <TextView
-        android:id="@+id/curLon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/curLon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/curLat"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"/>
 
@@ -43,12 +31,22 @@
         android:id="@+id/curLat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/curLat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/curLon"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"/>
+
+    <TextView
+        android:id="@+id/curLon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/curLat"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"/>
+
 
     <TextView
         android:id="@+id/homeLocationText"
@@ -57,17 +55,7 @@
         android:text="@string/homeLocationText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/homeLon"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/homeLon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/homeLon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/homeLat"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -76,9 +64,70 @@
         android:layout_height="wrap_content"
         android:text="@string/homeLat"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/homeLon"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
+    <TextView
+        android:id="@+id/homeLon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/homeLon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/homeLat"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/curLat"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sat" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/startTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/startTrack"
+        android:textColor="#8BC34A"
+        android:textSize="20sp"
+        style = "@style/Widget.AppCompat.Button.Borderless.Colored"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeLon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.2"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/clearHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clearHome"
+        android:textColor="#8BC34A"
+        android:textSize="15sp"
+        style = "@style/Widget.AppCompat.Button.Borderless.Colored"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startTrack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/setHome"
+        app:layout_constraintVertical_bias="0.2"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/setHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setHome"
+        android:textColor="#8BC34A"
+        android:textSize="15sp"
+        style = "@style/Widget.AppCompat.Button.Borderless.Colored"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startTrack"
+        app:layout_constraintStart_toEndOf="@id/clearHome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

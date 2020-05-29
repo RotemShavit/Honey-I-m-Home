@@ -6,4 +6,7 @@
     <string name="homeLocationText">homeLocationText</string>
     <string name="homeLon">homeLon</string>
     <string name="homeLat">homeLat</string>
+    <string name="startTrack">Start tracking location</string>
+    <string name="clearHome">Clear Home</string>
+    <string name="setHome">Set Home</string>
 </resources>
