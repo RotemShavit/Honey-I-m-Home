@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Honey I\'m Home!</string>
+    <string name="curLocationText">curLocationText</string>
+    <string name="curLon">curLon</string>
+    <string name="curLat">curLat</string>
+    <string name="homeLocationText">homeLocationText</string>
+    <string name="homeLon">homeLon</string>
+    <string name="homeLat">homeLat</string>
 </resources>
